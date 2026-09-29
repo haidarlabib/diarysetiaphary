@@ -1,0 +1,16 @@
+node_modules/
+dist/
+.vite/
+.codegraph/
+.omo/
+.playwright-mcp/
+qa-*.png
+qa-*.log
+vite.log
+vite.err.log
+asset-board*.png
+asset-layers-board*.png
+character-board*.png
+character-production-board.png
+character-top.png
+character-bottom.png
