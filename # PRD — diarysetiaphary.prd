@@ -1,0 +1,3050 @@
+# PRD — diarysetiaphary
+
+## Asset-Driven Production & Implementation Specification
+
+**Project:** `diarysetiaphary`
+**Version:** 2.1
+**Platform:** Web Browser
+**Genre:** Interactive Story / Visual Novel / Digital Diary
+**Rendering:** Three.js 2D/2.5D
+**UI:** HTML + CSS
+**Status:** Asset-ready production phase
+
+---
+
+# 1. PRODUCT VISION
+
+`diarysetiaphary` adalah interactive story / visual novel berbasis browser yang terasa seperti membuka sebuah diary pribadi dan menjalani hari bersama karakter-karakternya.
+
+Game menggunakan dunia visual 2D/2.5D yang dibangun menggunakan Three.js.
+
+Three.js digunakan untuk:
+
+* environment,
+* character,
+* depth,
+* parallax,
+* camera,
+* animation,
+* visual effects,
+* scene transition.
+
+HTML/CSS digunakan untuk:
+
+* dialogue,
+* choice,
+* navigation,
+* diary interface,
+* menu,
+* settings,
+* notifications,
+* HUD,
+* text.
+
+Game **bukan full 3D game**.
+
+Game juga bukan:
+
+* RPG,
+* combat game,
+* simulation game,
+* dashboard application,
+* exploration-heavy 3D game.
+
+Prioritas pengalaman:
+
+1. cerita,
+2. karakter,
+3. diary,
+4. suasana,
+5. percakapan,
+6. interaksi sederhana,
+7. visual consistency.
+
+---
+
+# 2. SOURCE OF TRUTH
+
+Semua asset reference yang telah dibuat sebelumnya adalah **visual source of truth**.
+
+Folder asset berisi reference berikut:
+
+```text
+01. VISUAL STYLE REFERENCE
+02. ASSET PRODUCTION SPEC
+03. CHARACTER MASTER
+04. CHARACTER PRODUCTION ASSETS
+05. ENVIRONMENT MASTER
+06. ENVIRONMENT LAYERS
+07. DIARY SYSTEM ASSETS
+08. UI SYSTEM
+09. FX / ANIMATION REFERENCE
+10. STORY CG / SPECIAL ILLUSTRATION
+```
+
+Urutan prioritas:
+
+```text
+ASSET REFERENCES
+      ↓
+PRD INI
+      ↓
+PROJECT / SKILL INSTRUCTIONS
+      ↓
+IMPLEMENTATION
+```
+
+Existing code tidak boleh dijadikan alasan untuk mengubah desain visual yang sudah dibuat.
+
+Jika existing implementation tidak cocok dengan asset:
+
+**ubah implementation terlebih dahulu, bukan asset.**
+
+---
+
+# 3. ATURAN PALING PENTING: JANGAN MEMBUAT ULANG ASSET
+
+AI agent harus memahami bahwa seluruh reference yang tersedia sudah dibuat dengan sengaja.
+
+Agent **tidak boleh**:
+
+* menggambar ulang Tania,
+* membuat karakter baru yang mirip Tania,
+* membuat environment baru yang hanya menyerupai reference,
+* mengganti warna visual,
+* mengganti pakaian karakter,
+* mengganti bentuk diary,
+* mengganti UI style,
+* membuat button style generik,
+* membuat icon style generik,
+* mengganti typography direction,
+* mengganti visual language.
+
+Jika elemen sudah ada pada reference:
+
+**gunakan elemen tersebut.**
+
+Jika elemen berada di dalam reference board:
+
+**ambil/crop elemen yang sudah ada.**
+
+Jika elemen membutuhkan penyesuaian:
+
+**lakukan penyesuaian di implementation layer.**
+
+---
+
+# 4. REFERENCE BOARD BUKAN ASSET GAME UTUH
+
+Ini sangat penting.
+
+Gambar seperti:
+
+```text
+04. CHARACTER PRODUCTION ASSETS
+05. ENVIRONMENT MASTER
+06. ENVIRONMENT LAYERS
+07. DIARY SYSTEM ASSETS
+08. UI SYSTEM
+09. FX / ANIMATION REFERENCE
+10. STORY CG / SPECIAL ILLUSTRATION
+```
+
+adalah **production reference board**.
+
+Board tersebut TIDAK boleh langsung dimasukkan sebagai satu gambar besar ke game.
+
+AI harus mengikuti extraction plan yang sudah ditentukan di PRD ini.
+
+Tidak perlu AI menebak sendiri bagian mana yang harus diambil.
+
+---
+
+# 5. ASSET EXTRACTION PLAN
+
+## 5.1 Prinsip
+
+Setiap reference board sudah memiliki pembagian visual yang jelas.
+
+Agent harus mengambil **hanya elemen yang memang dibutuhkan game**.
+
+Alurnya:
+
+```text
+REFERENCE BOARD
+      ↓
+SOURCE PANEL YANG SUDAH DITENTUKAN
+      ↓
+ELEMENT YANG SUDAH DITENTUKAN
+      ↓
+CROP / ISOLATE
+      ↓
+TRANSPARENT BACKGROUND JIKA DIPERLUKAN
+      ↓
+PRESERVE ORIGINAL VISUAL
+      ↓
+OPTIMIZE
+      ↓
+GAME ASSET
+```
+
+Agent tidak perlu melakukan creative interpretation pada tahap ini.
+
+---
+
+# 6. EXTRACTION PLAN — 01. VISUAL STYLE REFERENCE
+
+## Source
+
+Gunakan:
+
+```text
+01. VISUAL STYLE REFERENCE
+```
+
+Reference ini digunakan sebagai **style reference**, bukan sebagai production asset utama.
+
+## Jangan crop untuk gameplay
+
+Tidak perlu mengambil:
+
+* panel karakter,
+* panel environment,
+* UI screenshot,
+* palette sebagai image,
+* typography sebagai image.
+
+Karena semua itu hanya referensi visual.
+
+## Yang digunakan
+
+Informasi visual dari board digunakan untuk menjaga:
+
+* warna,
+* lighting,
+* texture,
+* linework,
+* shading,
+* composition,
+* material,
+* atmosphere,
+* visual hierarchy.
+
+## Status
+
+```text
+01. VISUAL STYLE REFERENCE
+→ STYLE REFERENCE ONLY
+→ TIDAK PERLU DI-CROP UNTUK GAME
+```
+
+---
+
+# 7. EXTRACTION PLAN — 02. ASSET PRODUCTION SPEC
+
+## Source
+
+```text
+02. ASSET PRODUCTION SPEC
+```
+
+Reference ini adalah **technical specification**, bukan gameplay asset.
+
+Jangan memasukkan board ini ke game.
+
+Gunakan untuk menentukan:
+
+* ukuran karakter,
+* ukuran portrait,
+* canvas,
+* framing,
+* transparent background,
+* environment resolution,
+* layer structure,
+* naming,
+* diary dimensions,
+* UI dimensions,
+* FX resolution.
+
+## Status
+
+```text
+02. ASSET PRODUCTION SPEC
+→ TECHNICAL REFERENCE ONLY
+→ TIDAK DI-CROP KE GAME
+```
+
+---
+
+# 8. EXTRACTION PLAN — 03. CHARACTER MASTER
+
+## Source
+
+```text
+03. CHARACTER MASTER
+```
+
+Reference ini adalah character source of truth.
+
+## Tania
+
+Gunakan bagian:
+
+### A. Turnaround / Full Body
+
+Ambil sebagai reference untuk:
+
+* front,
+* 3/4 front,
+* side,
+* back.
+
+Jangan langsung menggunakan seluruh turnaround sheet sebagai sprite.
+
+Turnaround digunakan untuk memastikan:
+
+* proporsi,
+* rambut,
+* pakaian,
+* sepatu,
+* tas,
+* siluet,
+* warna.
+
+### B. Head & Expression Reference
+
+Gunakan sebagai reference untuk:
+
+* wajah,
+* mata,
+* rambut,
+* ekspresi.
+
+### C. Important Details
+
+Gunakan sebagai reference untuk:
+
+* rambut,
+* hair accessory,
+* pakaian,
+* tas,
+* sepatu,
+* kalung,
+* detail blouse.
+
+### D. Body Pose Examples
+
+Gunakan sebagai reference untuk pose production asset.
+
+### E. Sitting Pose Examples
+
+Gunakan sebagai reference untuk sitting production asset.
+
+## Jangan
+
+Jangan memasukkan seluruh Character Master board ke dalam game.
+
+---
+
+# 9. EXTRACTION PLAN — 04. CHARACTER PRODUCTION ASSETS
+
+Ini adalah sumber utama character asset.
+
+## Source board
+
+```text
+04. CHARACTER PRODUCTION ASSETS
+```
+
+Gunakan panel berikut.
+
+---
+
+## A. STANDING POSES
+
+Ambil individual character dari panel:
+
+```text
+A. STANDING POSES (FULL BODY)
+```
+
+Ambil:
+
+```text
+tania_standing_neutral
+tania_standing_smile
+tania_standing_talking
+tania_standing_thinking
+tania_standing_sad
+tania_standing_surprised
+```
+
+Setiap karakter harus menjadi:
+
+```text
+1 PNG individual
+1 transparent canvas
+1 character
+```
+
+Jangan mengambil panel keseluruhan.
+
+---
+
+# 10. SITTING POSES
+
+Dari:
+
+```text
+B. SITTING POSES
+```
+
+ambil:
+
+```text
+tania_sitting_neutral
+tania_sitting_smile
+tania_sitting_talking
+tania_sitting_writing
+tania_sitting_reading
+tania_sitting_thinking
+```
+
+Gunakan untuk:
+
+* bedroom,
+* diary scene,
+* writing scene,
+* reading scene,
+* relaxed dialogue.
+
+---
+
+# 11. WALKING ASSETS
+
+Dari:
+
+```text
+C. WALKING POSE / SEQUENCE
+```
+
+ambil frame individual yang tersedia.
+
+Gunakan untuk:
+
+* simple movement,
+* entering scene,
+* leaving scene,
+* walking transition.
+
+Jangan menggunakan seluruh strip walking sebagai satu gambar.
+
+Jika nanti diperlukan sprite animation:
+
+```text
+walk_01
+walk_02
+walk_03
+...
+```
+
+setiap frame menjadi asset individual.
+
+---
+
+# 12. PORTRAIT / BUST ASSETS
+
+Dari:
+
+```text
+D. PORTRAIT / BUST EXPRESSIONS
+```
+
+ambil:
+
+```text
+tania_portrait_neutral
+tania_portrait_smile
+tania_portrait_talking
+tania_portrait_thinking
+tania_portrait_sad
+tania_portrait_surprised
+tania_portrait_happy
+tania_portrait_embarrassed
+```
+
+Gunakan untuk dialogue UI.
+
+Portrait harus:
+
+* transparent,
+* tidak terpotong rambut,
+* tidak terpotong bagian wajah,
+* framing konsisten.
+
+---
+
+# 13. SPECIAL ACTIONS / PROPS
+
+Dari:
+
+```text
+E. SPECIAL ACTIONS / PROPS
+```
+
+ambil:
+
+```text
+tania_holding_diary
+tania_holding_phone
+tania_holding_cup
+tania_holding_umbrella
+```
+
+Gunakan hanya pada scene yang membutuhkan.
+
+Jangan memasukkan seluruh panel.
+
+---
+
+# 14. GESTURE ASSETS
+
+Dari:
+
+```text
+F. GESTURE VARIATIONS
+```
+
+ambil jika diperlukan:
+
+```text
+hand_wave
+hand_on_chest
+hand_point
+arms_crossed
+hand_near_face
+hands_together
+```
+
+Gunakan untuk:
+
+* dialogue variation,
+* reaction,
+* interaction.
+
+Gesture tidak perlu digunakan semuanya di MVP.
+
+---
+
+# 15. SMALL EXPRESSION ASSETS
+
+Dari:
+
+```text
+G. ADDITIONAL EXPRESSIONS
+```
+
+ambil:
+
+```text
+serious
+concerned
+laughing
+sleepy
+```
+
+Gunakan sebagai additional dialogue portraits.
+
+---
+
+# 16. CHARACTER COLOR REFERENCE
+
+Dari:
+
+```text
+H. COLOR REFERENCE
+```
+
+jangan crop sebagai gameplay asset.
+
+Gunakan sebagai palette reference.
+
+---
+
+# 17. ENVIRONMENT EXTRACTION — 05. ENVIRONMENT MASTER
+
+## Source
+
+```text
+05. ENVIRONMENT MASTER
+```
+
+Reference ini menentukan desain utama lokasi.
+
+MVP memiliki:
+
+```text
+BEDROOM
+GARDEN
+CAFE
+```
+
+---
+
+# 18. BEDROOM
+
+Gunakan panel:
+
+```text
+A. BEDROOM — MASTER DESIGN
+```
+
+Gunakan sebagai master visual untuk:
+
+* bedroom composition,
+* furniture,
+* window,
+* bed,
+* desk,
+* bookshelf,
+* chair,
+* plant,
+* lamp,
+* rug,
+* props.
+
+### Variant waktu
+
+Gunakan:
+
+```text
+Morning
+Afternoon
+Evening
+Night
+```
+
+sebagai lighting reference.
+
+Jangan langsung memasukkan semua 4 gambar sebagai satu spritesheet.
+
+---
+
+# 19. BEDROOM PROPS
+
+Dari bagian:
+
+```text
+KEY PROPS
+```
+
+gunakan reference untuk:
+
+* bed,
+* desk,
+* chair,
+* bookshelf,
+* lamp,
+* plant,
+* pillow,
+* blanket,
+* diary,
+* books,
+* photo frame,
+* rug.
+
+Jika prop diperlukan sebagai independent foreground/midground element, isolate dari reference.
+
+---
+
+# 20. GARDEN
+
+Gunakan:
+
+```text
+B. GARDEN — MASTER DESIGN
+```
+
+Reference untuk:
+
+* main path,
+* bench,
+* lamp,
+* trees,
+* bushes,
+* flowers,
+* fence,
+* pond,
+* stones,
+* arch.
+
+Gunakan time variants sebagai lighting reference:
+
+```text
+Morning
+Afternoon
+Golden Hour
+Evening
+```
+
+---
+
+# 21. CAFE
+
+Gunakan:
+
+```text
+C. CAFE — MASTER DESIGN
+```
+
+Reference untuk:
+
+* tables,
+* chairs,
+* counter,
+* coffee machine,
+* menu board,
+* window,
+* plants,
+* hanging lamps,
+* books.
+
+Time variants menjadi lighting reference.
+
+---
+
+# 22. ENVIRONMENT LAYER EXTRACTION — 06. ENVIRONMENT LAYERS
+
+Ini adalah bagian penting untuk Three.js.
+
+Gunakan:
+
+```text
+06. ENVIRONMENT LAYERS
+```
+
+Setiap environment harus dipahami sebagai beberapa depth layer.
+
+---
+
+# 23. BEDROOM LAYERS
+
+Dari panel:
+
+```text
+A. BEDROOM — LAYER BREAKDOWN
+```
+
+gunakan struktur:
+
+```text
+1. Background
+2. Far Layer
+3. Mid Layer
+4. Main Layer
+5. Foreground
+```
+
+### Background
+
+Gunakan bagian:
+
+```text
+sky / city / distant view
+```
+
+sebagai far background.
+
+### Far Layer
+
+Gunakan:
+
+* distant building,
+* distant scenery,
+* window exterior.
+
+### Mid Layer
+
+Gunakan:
+
+* window,
+* curtains,
+* large environmental structure.
+
+### Main Layer
+
+Gunakan:
+
+* bed,
+* desk,
+* bookshelf,
+* room furniture.
+
+### Foreground
+
+Gunakan:
+
+* plants,
+* nearby objects,
+* foreground props.
+
+Karakter ditempatkan di antara:
+
+```text
+Main Environment
+        ↓
+Character
+        ↓
+Foreground
+```
+
+---
+
+# 24. GARDEN LAYERS
+
+Dari:
+
+```text
+B. GARDEN — LAYER BREAKDOWN
+```
+
+gunakan:
+
+```text
+Background
+Far Layer
+Mid Layer
+Main Layer
+Foreground
+```
+
+### Background
+
+* sky,
+* distant city.
+
+### Far Layer
+
+* distant trees,
+* distant foliage.
+
+### Mid Layer
+
+* trees,
+* arch,
+* large vegetation.
+
+### Main Layer
+
+* path,
+* bench,
+* lamp,
+* pond,
+* major environment objects.
+
+### Foreground
+
+* flowers,
+* bushes,
+* leaves,
+* stones,
+* foreground vegetation.
+
+---
+
+# 25. CAFE LAYERS
+
+Dari:
+
+```text
+C. CAFE — LAYER BREAKDOWN
+```
+
+gunakan:
+
+```text
+Background
+Far Layer
+Mid Layer
+Main Layer
+Foreground
+```
+
+### Background
+
+* sky,
+* distant city.
+
+### Far Layer
+
+* distant trees,
+* outside scenery.
+
+### Mid Layer
+
+* window,
+* architectural frame.
+
+### Main Layer
+
+* tables,
+* chairs,
+* counter,
+* coffee machine,
+* menu board.
+
+### Foreground
+
+* plants,
+* nearby tables,
+* decorative objects.
+
+---
+
+# 26. PARALLAX RULE
+
+Layer tidak boleh bergerak dengan jarak yang sama.
+
+Gunakan subtle depth.
+
+Contoh:
+
+```text
+Background       0.00
+Far Layer        0.10
+Mid Layer        0.20
+Main Layer       0.35
+Character        0.45
+Foreground       0.60
+```
+
+Nilai dapat disesuaikan saat runtime.
+
+Tujuannya hanya memberikan depth halus.
+
+Jangan membuat parallax berlebihan.
+
+---
+
+# 27. DIARY EXTRACTION — 07. DIARY SYSTEM ASSETS
+
+Gunakan:
+
+```text
+07. DIARY SYSTEM ASSETS
+```
+
+---
+
+# 28. DIARY COVER
+
+Dari panel:
+
+```text
+A. DIARY COVER
+```
+
+ambil:
+
+* default cover,
+* flower cover,
+* natural cover,
+* soft cover.
+
+Untuk MVP:
+
+```text
+default cover = primary
+```
+
+Variant lainnya boleh disimpan untuk future customization.
+
+---
+
+# 29. DIARY OPEN
+
+Dari:
+
+```text
+B. DIARY OPEN
+```
+
+ambil open diary sebagai visual reference.
+
+Namun:
+
+**jangan gunakan screenshot board sebagai satu gambar UI jika text harus interaktif.**
+
+Diary harus dibuat modular:
+
+```text
+book frame
++
+left page
++
+right page
++
+paper texture
++
+decoration
++
+photo
++
+text
+```
+
+---
+
+# 30. PAGE TEMPLATE
+
+Dari:
+
+```text
+C. PAGE VARIATION
+```
+
+ambil reference:
+
+* blank page,
+* lined page,
+* grid page,
+* decorative page,
+* photo page.
+
+Untuk MVP:
+
+```text
+lined page
+```
+
+menjadi default.
+
+---
+
+# 31. PAPER ASSETS
+
+Dari:
+
+```text
+D. PAPER TEXTURE
+```
+
+ambil:
+
+* clean paper,
+* aged paper,
+* lined paper,
+* grid paper.
+
+Paper texture harus tileable jika digunakan sebagai CSS/Three.js texture.
+
+---
+
+# 32. DECORATIVE DIARY ASSETS
+
+Dari:
+
+```text
+E. DECORATIVE ELEMENTS
+```
+
+ambil individual:
+
+* pressed flower,
+* leaves,
+* washi tape,
+* paper note,
+* tag,
+* sticker,
+* clip,
+* seal,
+* ribbon,
+* small flower,
+* decorative divider.
+
+Semua dekorasi harus menjadi modular PNG jika memungkinkan.
+
+Jangan bake semua dekorasi menjadi satu image.
+
+---
+
+# 33. HANDWRITING
+
+Dari:
+
+```text
+F. HANDWRITING STYLE
+```
+
+jangan crop tulisan sebagai gameplay image.
+
+Gunakan hanya sebagai reference untuk handwriting typography.
+
+Text diary harus tetap menjadi text/HTML agar:
+
+* bisa diedit,
+* bisa disimpan,
+* bisa dicari,
+* bisa responsive.
+
+---
+
+# 34. PHOTO / POLAROID
+
+Dari:
+
+```text
+G. PHOTO FRAME / POLAROID
+```
+
+ambil:
+
+* polaroid frame,
+* tape,
+* decorative frame.
+
+Foto sebenarnya harus dapat diganti menggunakan story/environment image.
+
+---
+
+# 35. DIARY UI
+
+Dari:
+
+```text
+H. DIARY UI COMPONENT
+```
+
+gunakan sebagai visual reference untuk layout.
+
+Jangan memasukkan screenshot UI sebagai satu gambar besar.
+
+HTML/CSS harus membangun:
+
+* diary history list,
+* date,
+* page navigation,
+* edit button,
+* close button,
+* entry content.
+
+---
+
+# 36. PAGE TURN
+
+Dari:
+
+```text
+I. PAGE TRANSITION
+```
+
+gunakan sebagai reference.
+
+Implementasi page turn dilakukan menggunakan animation/CSS/Three.js.
+
+Tidak perlu menjadikan seluruh frame sequence sebagai satu background.
+
+---
+
+# 37. DIARY HISTORY
+
+Dari:
+
+```text
+J. DIARY LIST ITEM
+```
+
+ambil visual reference untuk setiap history item.
+
+Implementasikan menggunakan HTML/CSS.
+
+---
+
+# 38. ORNAMENTS
+
+Dari:
+
+```text
+K. SMALL ORNAMENT
+```
+
+ambil individual:
+
+* leaf,
+* heart,
+* flower,
+* bow,
+* star,
+* sun,
+* moon,
+* divider.
+
+Gunakan secara hemat.
+
+---
+
+# 39. UI EXTRACTION — 08. UI SYSTEM
+
+UI reference harus digunakan untuk membangun component system.
+
+Jangan memasukkan seluruh UI board sebagai background.
+
+---
+
+# 40. DIALOGUE BOX
+
+Dari:
+
+```text
+A. DIALOGUE BOX
+```
+
+ambil/reference:
+
+* dialogue container,
+* speaker tag,
+* portrait framing,
+* narration treatment,
+* character dialogue treatment.
+
+Implementasi final menggunakan HTML/CSS.
+
+Portrait karakter berasal dari:
+
+```text
+04. CHARACTER PRODUCTION ASSETS
+```
+
+bukan diambil ulang dari screenshot UI.
+
+---
+
+# 41. CHOICE BUTTON
+
+Dari:
+
+```text
+B. CHOICE BUTTON
+```
+
+buat component:
+
+```text
+choice-default
+choice-hover
+choice-selected
+choice-disabled
+```
+
+Gunakan decoration secara modular jika memungkinkan.
+
+---
+
+# 42. NAVIGATION
+
+Dari:
+
+```text
+C. NAVIGATION & MENU
+```
+
+gunakan:
+
+* home,
+* diary,
+* settings,
+* back,
+* next,
+* close,
+* menu.
+
+Icon sebaiknya digunakan sebagai SVG/CSS/icon asset, bukan crop screenshot besar.
+
+---
+
+# 43. DAY & TIME INDICATOR
+
+Dari:
+
+```text
+D. DAY & TIME INDICATOR
+```
+
+buat:
+
+```text
+day indicator
+date indicator
+time indicator
+time-of-day indicator
+```
+
+Text tetap HTML.
+
+---
+
+# 44. NOTIFICATION
+
+Dari:
+
+```text
+E. NOTIFICATION / TOAST
+```
+
+buat:
+
+```text
+success
+information
+warning
+error
+```
+
+---
+
+# 45. LOADING
+
+Dari:
+
+```text
+F. LOADING SCREEN
+```
+
+gunakan visual composition sebagai reference.
+
+Implementasikan:
+
+```text
+background
++
+small decorative element
++
+loading indicator
++
+text
+```
+
+---
+
+# 46. TRANSITION
+
+Dari:
+
+```text
+G. TRANSITION / FADE PANEL
+```
+
+implementasikan:
+
+* fade in,
+* fade out,
+* dissolve,
+* scene transition.
+
+Gunakan CSS/Three.js.
+
+Jangan menggunakan screenshot transition sebagai satu gambar.
+
+---
+
+# 47. MENU
+
+Dari:
+
+```text
+H. MENU UTAMA
+```
+
+implementasikan HTML/CSS.
+
+Gunakan background/environment asset sebenarnya.
+
+---
+
+# 48. ICON SET
+
+Dari:
+
+```text
+I. ICON SET
+```
+
+ambil/recreate sebagai vector/icon asset berdasarkan reference.
+
+Jangan crop icon bersama seluruh board.
+
+Icon harus:
+
+* konsisten,
+* scalable,
+* ringan.
+
+---
+
+# 49. MISC UI
+
+Dari:
+
+```text
+J. MISCELLANEOUS UI ELEMENTS
+```
+
+ambil/reference:
+
+* progress bar,
+* relationship indicator,
+* avatar circle,
+* counter,
+* bookmark,
+* status indicator.
+
+---
+
+# 50. POPUP / WINDOW
+
+Dari:
+
+```text
+K. WINDOW / POPUP
+```
+
+gunakan untuk:
+
+* save confirmation,
+* settings popup,
+* confirmation dialog.
+
+---
+
+# 51. ITEM / INVENTORY
+
+Dari:
+
+```text
+L. ITEM / INVENTORY
+```
+
+untuk future feature.
+
+Tidak wajib masuk MVP jika belum diperlukan story.
+
+---
+
+# 52. TOOLTIP
+
+Dari:
+
+```text
+M. TOOLTIPS / HOVER
+```
+
+gunakan untuk contextual information.
+
+---
+
+# 53. FX EXTRACTION — 09. FX / ANIMATION REFERENCE
+
+Gunakan:
+
+```text
+09. FX / ANIMATION REFERENCE
+```
+
+Reference ini menentukan behavior, bukan seluruh board dimasukkan ke game.
+
+---
+
+# 54. LIGHTING
+
+Gunakan panel:
+
+```text
+A. LIGHTING VARIATIONS
+```
+
+sebagai lighting reference.
+
+Jangan crop menjadi gameplay background jika lighting bisa dilakukan melalui:
+
+* color overlay,
+* CSS filter,
+* Three.js material,
+* ambient lighting,
+* texture variant.
+
+---
+
+# 55. ATMOSPHERIC EFFECTS
+
+Dari:
+
+```text
+B. ATMOSPHERIC EFFECTS
+```
+
+ambil/reference:
+
+* sunlight rays,
+* dust particles,
+* bokeh,
+* soft lens glow,
+* cloud movement,
+* sunset,
+* night sky,
+* moon glow.
+
+Particle harus modular.
+
+---
+
+# 56. WEATHER
+
+Dari:
+
+```text
+C. WEATHER EFFECTS
+```
+
+gunakan:
+
+* light rain,
+* heavy rain,
+* wet surface,
+* fog,
+* snow,
+* falling leaves,
+* petals,
+* fireworks.
+
+Jangan memasukkan weather sebagai bagian permanen dari background kecuali memang merupakan scene-specific static art.
+
+---
+
+# 57. ENVIRONMENT ANIMATION
+
+Dari:
+
+```text
+D. ENVIRONMENT ANIMATION
+```
+
+implementasikan:
+
+* leaves,
+* plant sway,
+* curtain sway,
+* water flow,
+* lamp flicker,
+* fan rotation,
+* candle flame,
+* laptop glow,
+* clock movement,
+* door opening.
+
+Prioritas MVP:
+
+```text
+curtain
+plant
+light
+subtle particles
+```
+
+---
+
+# 58. CHARACTER ANIMATION
+
+Dari:
+
+```text
+E. CHARACTER ANIMATION
+```
+
+implementasikan:
+
+* breathing,
+* blink,
+* hair sway,
+* walk,
+* sitting idle,
+* writing,
+* reading,
+* surprised reaction,
+* happy reaction.
+
+Animation harus subtle.
+
+---
+
+# 59. UI ANIMATION
+
+Dari:
+
+```text
+F. UI ANIMATION
+```
+
+implementasikan:
+
+* button hover,
+* click,
+* tab switch,
+* toggle,
+* page turn,
+* menu slide,
+* notification,
+* dialogue fade.
+
+---
+
+# 60. TRANSITION FX
+
+Dari:
+
+```text
+G. TRANSITION EFFECTS
+```
+
+implementasikan:
+
+* fade,
+* dissolve,
+* black fade,
+* parallax transition,
+* time transition,
+* weather transition.
+
+---
+
+# 61. PARTICLE ASSETS
+
+Dari:
+
+```text
+H. PARTICLE ELEMENTS
+```
+
+gunakan individual transparent particle:
+
+* dust,
+* petal,
+* leaf,
+* sparkle,
+* firefly,
+* heart.
+
+Particle harus dapat diulang/didistribusikan lewat code.
+
+---
+
+# 62. STORY CG EXTRACTION — 10. STORY CG / SPECIAL ILLUSTRATION
+
+Reference ini digunakan untuk menentukan jenis CG.
+
+Panel:
+
+```text
+A. DAILY LIFE MOMENTS
+B. CHARACTER INTERACTION
+C. LOCATION SCENES
+D. EMOTIONAL SCENES
+E. STORY PROGRESSION
+F. SPECIAL SCENES
+G. VARIATION
+H. COMPOSITION REFERENCE
+```
+
+---
+
+# 63. CG PRIORITY
+
+CG tidak digunakan untuk semua scene.
+
+Gunakan hanya untuk:
+
+* important emotional moment,
+* important relationship moment,
+* special event,
+* story climax,
+* ending,
+* memorable diary moment.
+
+---
+
+# 64. CG ASSET RULE
+
+Jika CG sudah tersedia sebagai final image:
+
+gunakan langsung sebagai CG.
+
+Jika yang tersedia hanya reference board:
+
+crop individual CG panel yang relevan.
+
+Jangan crop:
+
+* title,
+* labels,
+* descriptions,
+* checklist,
+* palette,
+* notes.
+
+Hanya artwork CG-nya.
+
+---
+
+# 65. CG VARIANT
+
+Dari panel:
+
+```text
+G. VARIATION
+```
+
+gunakan sebagai reference untuk:
+
+* morning,
+* sunset,
+* night,
+* rain.
+
+Tidak perlu memasukkan semua variant ke MVP.
+
+---
+
+# 66. COMPOSITION REFERENCE
+
+Dari:
+
+```text
+H. COMPOSITION REFERENCE
+```
+
+gunakan sebagai guideline:
+
+* wide shot,
+* medium shot,
+* close up,
+* over shoulder,
+* two shot.
+
+Jangan memasukkan panel storyboard sebagai gameplay asset.
+
+---
+
+# 67. IMPLEMENTATION REFERENCE — 11. IMPLEMENTATION
+
+Reference implementation digunakan sebagai blueprint, bukan asset.
+
+Gunakan untuk memahami:
+
+* project structure,
+* scene flow,
+* screen flow,
+* asset integration,
+* Three.js role,
+* HTML/CSS role,
+* save/load,
+* responsive layout.
+
+Jangan memasukkan screenshot implementation board ke game.
+
+---
+
+# 68. FINAL ASSET MAPPING
+
+AI harus mengimplementasikan mapping berikut:
+
+```text
+01 VISUAL STYLE
+→ global visual rules
+
+02 ASSET PRODUCTION SPEC
+→ technical dimensions / framing / naming
+
+03 CHARACTER MASTER
+→ character consistency reference
+
+04 CHARACTER PRODUCTION
+→ actual character assets
+
+05 ENVIRONMENT MASTER
+→ environment visual reference
+
+06 ENVIRONMENT LAYERS
+→ actual 2.5D layer structure
+
+07 DIARY SYSTEM
+→ diary assets + diary visual language
+
+08 UI SYSTEM
+→ UI components
+
+09 FX / ANIMATION
+→ animation + particle behavior
+
+10 STORY CG
+→ special story illustrations
+
+11 IMPLEMENTATION
+→ architecture reference
+```
+
+---
+
+# 69. ASSET TO GAME MAPPING
+
+## Bedroom
+
+Gunakan:
+
+```text
+Environment Master
++
+Environment Layers
++
+Tania Character Production
++
+Diary Assets
++
+UI System
++
+FX Reference
+```
+
+Bedroom digunakan untuk:
+
+* home,
+* morning,
+* writing diary,
+* reading diary,
+* bedroom dialogue.
+
+---
+
+# 70. Garden
+
+Gunakan:
+
+```text
+Garden Environment
++
+Garden Layers
++
+Tania
++
+Ainat jika diperlukan
++
+UI
++
+FX
+```
+
+Garden digunakan untuk:
+
+* outdoor conversation,
+* relationship scene,
+* relaxing scene,
+* special CG.
+
+---
+
+# 71. Cafe
+
+Gunakan:
+
+```text
+Cafe Environment
++
+Cafe Layers
++
+Tania
++
+Ainat
++
+UI
++
+FX
+```
+
+Cafe digunakan untuk:
+
+* social conversation,
+* casual scene,
+* Ainat interaction,
+* special event.
+
+---
+
+# 72. CHARACTER / UI RELATIONSHIP
+
+Dialogue:
+
+```text
+Dialogue UI
+      +
+Character Portrait
+      +
+Dialogue Data
+```
+
+Jangan crop portrait dari UI screenshot jika portrait individual tersedia di Character Production Assets.
+
+---
+
+# 73. CHARACTER / ENVIRONMENT RELATIONSHIP
+
+Character:
+
+```text
+PNG transparent
+```
+
+Environment:
+
+```text
+layered background
+```
+
+Three.js:
+
+```text
+Scene
+ ├── Background
+ ├── Environment
+ ├── Character
+ ├── Foreground
+ └── FX
+```
+
+---
+
+# 74. DIARY / UI RELATIONSHIP
+
+Diary bukan screenshot.
+
+Struktur:
+
+```text
+Diary Container
+ ├── Cover / Book Frame
+ ├── Page Texture
+ ├── Decoration
+ ├── Photo
+ ├── Date
+ ├── Text
+ ├── Navigation
+ └── Interaction
+```
+
+---
+
+# 75. ASSET NAMING
+
+Gunakan naming konsisten.
+
+Contoh:
+
+```text
+tania_standing_neutral.png
+tania_standing_smile.png
+tania_standing_talking.png
+tania_standing_thinking.png
+
+tania_sitting_writing.png
+tania_sitting_reading.png
+
+tania_portrait_neutral.png
+tania_portrait_smile.png
+tania_portrait_talking.png
+tania_portrait_sad.png
+
+bedroom_bg.png
+bedroom_far.png
+bedroom_mid.png
+bedroom_main.png
+bedroom_fg.png
+
+garden_bg.png
+garden_far.png
+garden_mid.png
+garden_main.png
+garden_fg.png
+
+cafe_bg.png
+cafe_far.png
+cafe_mid.png
+cafe_main.png
+cafe_fg.png
+
+diary_cover_default.png
+diary_page_lined.png
+diary_page_blank.png
+diary_flower_01.png
+
+fx_dust_01.png
+fx_leaf_01.png
+fx_petal_01.png
+fx_firefly_01.png
+```
+
+Nama dapat disesuaikan dengan struktur repository, tetapi konsep penamaan harus tetap konsisten.
+
+---
+
+# 76. TRANSPARENCY RULE
+
+Asset berikut harus transparan jika digunakan sebagai individual element:
+
+* character,
+* portrait,
+* prop,
+* foreground object,
+* decoration,
+* flower,
+* leaf,
+* sticker,
+* tape,
+* icon,
+* particle,
+* FX.
+
+Jangan membuat background putih permanen pada asset yang seharusnya transparent.
+
+---
+
+# 77. CROPPING RULE
+
+Saat melakukan crop:
+
+### WAJIB
+
+* mempertahankan karakter/objek utuh,
+* mempertahankan proporsi,
+* mempertahankan warna,
+* mempertahankan lighting,
+* mempertahankan shading,
+* mempertahankan detail,
+* memberikan safe margin,
+* tidak memotong rambut,
+* tidak memotong kaki,
+* tidak memotong properti penting,
+* tidak mengubah artwork.
+
+### DILARANG
+
+* redraw,
+* repaint,
+* restyle,
+* recolor,
+* regenerate,
+* menambahkan detail,
+* menghapus detail penting.
+
+---
+
+# 78. RESIZE RULE
+
+Resize hanya dilakukan untuk:
+
+* performance,
+* runtime requirement,
+* responsive requirement.
+
+Resize tidak boleh mengubah aspect ratio.
+
+Jangan stretch.
+
+Gunakan:
+
+```text
+contain
+cover
+uniform scale
+```
+
+sesuai kebutuhan.
+
+---
+
+# 79. ANCHOR RULE
+
+Character:
+
+```text
+bottom center / feet
+```
+
+Prop:
+
+```text
+logical center
+```
+
+UI:
+
+```text
+CSS layout anchor
+```
+
+Diary:
+
+```text
+center container
+```
+
+---
+
+# 80. PERFORMANCE RULE
+
+Asset harus dioptimalkan tanpa merusak kualitas visual.
+
+Gunakan:
+
+* compressed PNG/WebP jika aman,
+* lazy loading untuk CG,
+* texture disposal,
+* scene cleanup,
+* reusable textures,
+* object reuse,
+* efficient particle systems.
+
+Jangan mengorbankan kualitas asset utama secara berlebihan hanya demi ukuran file.
+
+---
+
+# 81. PROJECT STRUCTURE
+
+Recommended:
+
+```text
+src/
+├── core/
+├── engine/
+├── renderer/
+├── scenes/
+├── characters/
+├── story/
+├── diary/
+├── ui/
+├── animation/
+├── fx/
+├── utils/
+└── data/
+
+public/
+└── assets/
+    ├── characters/
+    ├── environments/
+    ├── diary/
+    ├── ui/
+    ├── fx/
+    └── cg/
+```
+
+---
+
+# 82. STORY ARCHITECTURE
+
+Story harus data-driven.
+
+Contoh:
+
+```js
+{
+  id: "day01_bedroom_morning",
+  scene: "bedroom",
+  time: "morning",
+  events: [
+    {
+      type: "dialogue",
+      speaker: "tania",
+      expression: "smile",
+      text: "Selamat pagi."
+    }
+  ]
+}
+```
+
+---
+
+# 83. DIALOGUE TYPES
+
+Support:
+
+```text
+dialogue
+narration
+thought
+system
+```
+
+---
+
+# 84. CHOICE SYSTEM
+
+Branching kecil.
+
+Contoh:
+
+```text
+Day 01
+   ↓
+Bedroom
+   ↓
+Choice
+ ├── Write Diary
+ ├── Visit Tania
+ └── Visit Ainat
+```
+
+Branch tidak perlu menjadi massive branching tree.
+
+---
+
+# 85. DIARY DATA
+
+```js
+{
+  date,
+  time,
+  location,
+  charactersPresent,
+  content,
+  storyContext
+}
+```
+
+MVP storage:
+
+```text
+localStorage
+```
+
+---
+
+# 86. SAVE DATA
+
+Minimal:
+
+```text
+currentDay
+currentScene
+currentStoryNode
+diaryEntries
+relationshipState
+unlockedCG
+settings
+```
+
+---
+
+# 87. RESPONSIVE
+
+Target:
+
+* desktop,
+* laptop,
+* tablet,
+* mobile.
+
+UI harus tetap usable.
+
+Character/environment artwork tidak boleh terdistorsi.
+
+---
+
+# 88. ACCESSIBILITY
+
+Support:
+
+* readable text,
+* sufficient contrast,
+* keyboard navigation,
+* visible focus,
+* touch-friendly buttons,
+* reduced motion,
+* readable dialogue,
+* accessible diary controls.
+
+---
+
+# 89. REQUIRED AI WORKFLOW
+
+Sebelum coding:
+
+```text
+1. READ PRD
+        ↓
+2. READ PROJECT INSTRUCTIONS
+        ↓
+3. READ AVAILABLE SKILLS
+        ↓
+4. SCAN ASSETS
+        ↓
+5. IDENTIFY THE 10 REFERENCE BOARDS
+        ↓
+6. APPLY THE EXTRACTION PLAN IN THIS PRD
+        ↓
+7. CREATE PRODUCTION ASSET STRUCTURE
+        ↓
+8. CROP / ISOLATE ONLY THE SPECIFIED ELEMENTS
+        ↓
+9. VALIDATE ASSETS
+        ↓
+10. MAP ASSETS TO GAME SYSTEM
+        ↓
+11. IMPLEMENT
+        ↓
+12. TEST IN BROWSER
+        ↓
+13. VALIDATE VISUAL CONSISTENCY
+```
+
+---
+
+# 90. IMPORTANT: DO NOT INVENT EXTRA EXTRACTION
+
+Agent **tidak boleh** mengambil seluruh elemen dari reference board hanya karena elemen tersebut terlihat.
+
+Ambil hanya yang diperlukan berdasarkan mapping PRD.
+
+Contoh:
+
+Jika dari Character Production Assets dibutuhkan:
+
+```text
+standing_neutral
+standing_smile
+portrait_neutral
+portrait_smile
+sitting_writing
+```
+
+jangan otomatis membuat 40 asset tambahan.
+
+Gunakan asset tambahan hanya jika memang dibutuhkan oleh story/UI.
+
+---
+
+# 91. IMPORTANT: DO NOT CROP TEXT FROM REFERENCE BOARDS
+
+Jangan mengambil:
+
+* heading,
+* labels,
+* technical notes,
+* checklist,
+* descriptions,
+* palette labels,
+* filename examples,
+* measurement annotations.
+
+Yang diambil adalah **artwork / visual element**, bukan dokumentasi yang mengelilinginya.
+
+---
+
+# 92. IMPORTANT: DO NOT CROP UI SCREENSHOTS AS FINAL UI
+
+Jika UI reference menampilkan:
+
+```text
+Dialogue
+Choice
+Menu
+Diary
+Settings
+```
+
+gunakan screenshot tersebut untuk memahami visual.
+
+Kemudian implementasikan menggunakan HTML/CSS.
+
+Jangan menjadikan screenshot sebagai satu image UI final.
+
+Pengecualian hanya untuk artwork yang memang dimaksud sebagai decorative background.
+
+---
+
+# 93. IMPORTANT: DO NOT CROP CHARACTER FROM ENVIRONMENT UNLESS EXPLICITLY REQUIRED
+
+Jika character individual sudah tersedia di:
+
+```text
+04. CHARACTER PRODUCTION ASSETS
+```
+
+selalu prioritaskan character individual tersebut.
+
+Jangan mengambil Tania dari:
+
+* Environment Master,
+* UI screenshot,
+* Story CG,
+
+untuk menggantikan character production asset.
+
+---
+
+# 94. IMPORTANT: DO NOT CROP ENVIRONMENT FROM CHARACTER BOARD
+
+Begitu juga sebaliknya.
+
+Environment harus berasal dari:
+
+```text
+05. ENVIRONMENT MASTER
+06. ENVIRONMENT LAYERS
+```
+
+bukan dari:
+
+* character sheet,
+* UI screenshot,
+* story CG,
+
+kecuali hanya digunakan sebagai visual reference.
+
+---
+
+# 95. IMPLEMENTATION PRINCIPLE
+
+Game harus dibangun **mengelilingi visual asset yang sudah disiapkan**.
+
+Bukan memaksa asset mengikuti implementation.
+
+Prioritas:
+
+```text
+VISUAL CONSISTENCY
+        >
+ASSET REUSE
+        >
+CORRECT COMPOSITION
+        >
+IMPLEMENTATION QUALITY
+        >
+EXTRA FEATURES
+```
+
+---
+
+# 96. MVP
+
+MVP minimal harus memiliki:
+
+### Screens
+
+* title,
+* loading,
+* bedroom,
+* garden,
+* cafe,
+* dialogue,
+* choice,
+* diary,
+* menu,
+* settings,
+* special CG.
+
+### Systems
+
+* day system,
+* story system,
+* dialogue,
+* character expression,
+* choices,
+* scene navigation,
+* diary writing,
+* diary history,
+* save/load,
+* FX,
+* animation,
+* transitions.
+
+---
+
+# 97. DEFINITION OF DONE
+
+Project dianggap berhasil jika:
+
+* browser dapat menjalankan game,
+* semua reference utama telah dipetakan,
+* asset telah diekstrak sesuai extraction plan,
+* tidak ada unnecessary regeneration,
+* Tania konsisten dengan Character Master,
+* environment konsisten dengan Environment Master,
+* environment menggunakan layer 2.5D,
+* diary menggunakan Diary System Assets,
+* UI mengikuti UI System,
+* FX mengikuti FX Reference,
+* CG mengikuti Story CG Reference,
+* dialogue berjalan,
+* choice berjalan,
+* diary dapat ditulis,
+* diary dapat dibaca kembali,
+* save/load berjalan,
+* responsive,
+* tidak ada console error kritis,
+* tidak ada asset terdistorsi,
+* tidak ada artwork reference board yang tampil sebagai board mentah di game.
+
+---
+
+# 98. FINAL RULE
+
+Agent harus memahami:
+
+**Kita tidak sedang meminta AI untuk mendesain ulang game.**
+
+Kita sudah menyelesaikan tahap desain.
+
+Sekarang tugas AI adalah:
+
+```text
+DESIGN SUDAH ADA
+        ↓
+PAHAMI REFERENCE
+        ↓
+AMBIL ASSET YANG SUDAH DITENTUKAN
+        ↓
+CROP / ISOLATE SESUAI PLAN
+        ↓
+ORGANISASIKAN
+        ↓
+IMPLEMENTASIKAN
+        ↓
+VALIDASI
+```
+
+Bukan:
+
+```text
+DESIGN SUDAH ADA
+        ↓
+AI MEMBUAT VERSI SENDIRI
+```
+
+---
+
+# 99. FINAL PRODUCT PRINCIPLE
+
+`diarysetiaphary` harus terasa seperti satu produk visual yang utuh.
+
+Semua bagian harus berasal dari bahasa visual yang sama:
+
+```text
+CHARACTER
+   ↓
+ENVIRONMENT
+   ↓
+DIALOGUE
+   ↓
+DIARY
+   ↓
+UI
+   ↓
+FX
+   ↓
+STORY CG
+```
+
+Tidak boleh ada bagian yang terasa berasal dari game atau design system yang berbeda.
+
+**Build the game around the prepared visual language, not the other way around.**
+
+# 5A. OPERATIONAL ASSET EXTRACTION MANIFEST
+
+Bagian ini adalah **instruksi operasional langsung untuk AI agent**.
+
+AI agent **WAJIB mengikuti tabel ini sebagai daftar pekerjaan extraction asset**.
+
+Jangan melakukan extraction di luar tabel ini kecuali asset tersebut memang dibutuhkan oleh implementation dan tidak tersedia dari source yang telah ditentukan.
+
+Prinsip:
+
+```text
+SOURCE BOARD
+    ↓
+SOURCE PANEL
+    ↓
+ELEMENT YANG DIAMBIL
+    ↓
+OUTPUT ASSET
+    ↓
+FORMAT
+    ↓
+DESTINATION
+    ↓
+GAME USAGE
+```
+
+---
+
+## 5A.1 MASTER EXTRACTION TABLE
+
+| ID     | Source Reference                    | Source Panel / Area        | Yang Diambil                                                           | Yang Tidak Diambil                         | Output                              | Destination                                | Penggunaan              |
+| ------ | ----------------------------------- | -------------------------- | ---------------------------------------------------------------------- | ------------------------------------------ | ----------------------------------- | ------------------------------------------ | ----------------------- |
+| VSR-01 | 01. VISUAL STYLE REFERENCE          | Seluruh board              | Tidak ada production asset                                             | Semua heading, text, palette sebagai image | Reference only                      | `/docs/reference/`                         | Global visual direction |
+| APS-01 | 02. ASSET PRODUCTION SPEC           | Seluruh board              | Tidak ada production asset                                             | Semua technical notes sebagai image        | Reference only                      | `/docs/reference/`                         | Ukuran, crop, framing   |
+| CM-01  | 03. CHARACTER MASTER                | Tania turnaround           | Tania front / 3/4 / side / back sebagai reference                      | Board, label, text                         | Reference                           | `/docs/reference/characters/tania/`        | Character consistency   |
+| CM-02  | 03. CHARACTER MASTER                | Tania face / expression    | Bentuk wajah, rambut, mata, expression                                 | Background board                           | Reference                           | `/docs/reference/characters/tania/`        | Portrait consistency    |
+| CPA-01 | 04. CHARACTER PRODUCTION ASSETS     | Tania standing             | Setiap pose Tania secara individual                                    | Panel board, label                         | Individual PNG                      | `/assets/characters/tania/fullbody/`       | World character         |
+| CPA-02 | 04. CHARACTER PRODUCTION ASSETS     | Tania sitting              | Setiap pose sitting secara individual                                  | Panel board, label                         | Individual PNG                      | `/assets/characters/tania/sitting/`        | Bedroom / diary scene   |
+| CPA-03 | 04. CHARACTER PRODUCTION ASSETS     | Tania portrait / bust      | Setiap expression individual                                           | Panel board, label                         | Individual PNG                      | `/assets/characters/tania/portrait/`       | Dialogue                |
+| CPA-04 | 04. CHARACTER PRODUCTION ASSETS     | Tania special actions      | Pose dengan diary / phone / cup / umbrella jika tersedia               | Panel board                                | Individual PNG                      | `/assets/characters/tania/actions/`        | Story-specific scenes   |
+| CPA-05 | 04. CHARACTER PRODUCTION ASSETS     | Ainat                      | Individual Ainat poses / expressions yang tersedia                     | Board dan label                            | Individual PNG                      | `/assets/characters/ainat/`                | Cafe / interaction      |
+| CPA-06 | 04. CHARACTER PRODUCTION ASSETS     | Player                     | Individual player poses yang tersedia                                  | Board dan label                            | Individual PNG                      | `/assets/characters/player/`               | Player scenes           |
+| ENV-01 | 05. ENVIRONMENT MASTER              | Bedroom master             | Bedroom sebagai clean environment reference                            | Label / checklist                          | Environment asset/reference         | `/assets/environments/bedroom/`            | Bedroom scene           |
+| ENV-02 | 05. ENVIRONMENT MASTER              | Garden master              | Garden sebagai clean environment reference                             | Label / checklist                          | Environment asset/reference         | `/assets/environments/garden/`             | Garden scene            |
+| ENV-03 | 05. ENVIRONMENT MASTER              | Cafe master                | Cafe sebagai clean environment reference                               | Label / checklist                          | Environment asset/reference         | `/assets/environments/cafe/`               | Cafe scene              |
+| ENV-04 | 05. ENVIRONMENT MASTER              | Time / lighting variants   | Morning / afternoon / evening / night variants jika tersedia           | Board UI                                   | Individual environment variants     | `/assets/environments/<scene>/variants/`   | Time-of-day             |
+| LYR-01 | 06. ENVIRONMENT LAYERS              | Bedroom layer breakdown    | Background / far / mid / main / foreground                             | Diagram labels                             | Individual layer asset              | `/assets/environments/bedroom/layers/`     | Three.js 2.5D           |
+| LYR-02 | 06. ENVIRONMENT LAYERS              | Garden layer breakdown     | Background / far / mid / main / foreground                             | Diagram labels                             | Individual layer asset              | `/assets/environments/garden/layers/`      | Three.js 2.5D           |
+| LYR-03 | 06. ENVIRONMENT LAYERS              | Cafe layer breakdown       | Background / far / mid / main / foreground                             | Diagram labels                             | Individual layer asset              | `/assets/environments/cafe/layers/`        | Three.js 2.5D           |
+| LYR-04 | 06. ENVIRONMENT LAYERS              | Foreground elements        | Individual foreground objects yang memang diperlukan                   | Diagram / arrows                           | Transparent PNG                     | `/assets/environments/<scene>/foreground/` | Depth / occlusion       |
+| DIA-01 | 07. DIARY SYSTEM ASSETS             | Diary cover variations     | Cover utama + variant yang memang dipakai                              | Board, labels                              | Individual PNG                      | `/assets/diary/cover/`                     | Diary closed state      |
+| DIA-02 | 07. DIARY SYSTEM ASSETS             | Diary spine / edge         | Spine / edge jika dibutuhkan untuk animation                           | Board                                      | Individual PNG                      | `/assets/diary/book/`                      | Open / close            |
+| DIA-03 | 07. DIARY SYSTEM ASSETS             | Diary open / full spread   | Book frame / structural frame                                          | Text contoh dan screenshot UI              | Individual PNG / CSS frame          | `/assets/diary/book/`                      | Diary open state        |
+| DIA-04 | 07. DIARY SYSTEM ASSETS             | Page variations            | Blank / lined / grid / decorative page                                 | Board labels                               | Individual page texture             | `/assets/diary/pages/`                     | Diary pages             |
+| DIA-05 | 07. DIARY SYSTEM ASSETS             | Paper texture              | Clean / aged / lined / grid texture                                    | Board                                      | Tileable texture                    | `/assets/diary/textures/`                  | Page background         |
+| DIA-06 | 07. DIARY SYSTEM ASSETS             | Decorative elements        | Flower / leaf / tape / sticker / tag / clip / seal / ribbon            | Board                                      | Individual transparent PNG          | `/assets/diary/decorations/`               | Modular decoration      |
+| DIA-07 | 07. DIARY SYSTEM ASSETS             | Photo / polaroid           | Frame dan tape                                                         | Contoh photo jika hanya placeholder        | PNG frame                           | `/assets/diary/photo/`                     | Diary photo             |
+| DIA-08 | 07. DIARY SYSTEM ASSETS             | Small ornaments            | Leaf / flower / heart / star / divider / bow                           | Board labels                               | Individual PNG/SVG                  | `/assets/diary/ornaments/`                 | Page decoration         |
+| DIA-09 | 07. DIARY SYSTEM ASSETS             | Handwriting reference      | Tidak di-crop                                                          | Semua handwriting contoh                   | Reference only                      | `/docs/reference/diary/`                   | Typography direction    |
+| DIA-10 | 07. DIARY SYSTEM ASSETS             | Diary UI screen            | Tidak di-crop sebagai UI final                                         | Screenshot UI utuh                         | Reference only                      | `/docs/reference/diary/`                   | HTML/CSS layout         |
+| UI-01  | 08. UI SYSTEM                       | Dialogue box               | Frame / border / visual treatment jika reusable                        | Portrait dari screenshot                   | UI component asset                  | `/assets/ui/dialogue/`                     | Dialogue                |
+| UI-02  | 08. UI SYSTEM                       | Speaker name               | Speaker tag / badge style                                              | Text contoh                                | UI component                        | `/assets/ui/dialogue/`                     | Speaker identity        |
+| UI-03  | 08. UI SYSTEM                       | Choice buttons             | Button visual treatment                                                | Text contoh                                | CSS/component asset                 | `/assets/ui/choices/`                      | Choices                 |
+| UI-04  | 08. UI SYSTEM                       | Navigation                 | Back / next / home / diary / settings / close                          | Screenshot UI                              | SVG/PNG icon                        | `/assets/ui/navigation/`                   | Navigation              |
+| UI-05  | 08. UI SYSTEM                       | Day & time indicator       | Frame / ornament                                                       | Date/time text                             | UI component                        | `/assets/ui/hud/`                          | HUD                     |
+| UI-06  | 08. UI SYSTEM                       | Notification / toast       | Toast frame + icon treatment                                           | Text contoh                                | UI component                        | `/assets/ui/notification/`                 | Feedback                |
+| UI-07  | 08. UI SYSTEM                       | Loading screen             | Background artwork hanya jika memang artwork final                     | Loading text / progress UI                 | Background + CSS                    | `/assets/ui/loading/`                      | Loading                 |
+| UI-08  | 08. UI SYSTEM                       | Transition / fade          | Tidak di-crop sebagai screenshot                                       | Board                                      | CSS/Three.js effect                 | `/src/fx/`                                 | Scene transition        |
+| UI-09  | 08. UI SYSTEM                       | Icon set                   | Individual icons                                                       | Entire icon panel                          | SVG/PNG                             | `/assets/ui/icons/`                        | UI                      |
+| UI-10  | 08. UI SYSTEM                       | Popup / window             | Frame / decorative treatment                                           | Screenshot text                            | UI component                        | `/assets/ui/modal/`                        | Settings / confirmation |
+| UI-11  | 08. UI SYSTEM                       | Tooltip                    | Tooltip frame/style                                                    | Screenshot text                            | CSS/component                       | `/assets/ui/tooltip/`                      | Hover information       |
+| UI-12  | 08. UI SYSTEM                       | Item / inventory           | Individual item icon jika dibutuhkan MVP                               | Entire inventory screenshot                | SVG/PNG                             | `/assets/ui/items/`                        | Future / optional       |
+| FX-01  | 09. FX / ANIMATION REFERENCE        | Lighting variations        | Tidak perlu crop jika hanya lighting reference                         | Board labels                               | Reference                           | `/docs/reference/fx/`                      | Lighting                |
+| FX-02  | 09. FX / ANIMATION REFERENCE        | Atmospheric effects        | Dust / glow / bokeh / sunlight jika tersedia sebagai standalone visual | Screenshot panel                           | Transparent PNG                     | `/assets/fx/atmosphere/`                   | Scene atmosphere        |
+| FX-03  | 09. FX / ANIMATION REFERENCE        | Weather                    | Rain / fog / snow / petals / leaves jika tersedia sebagai element      | Full scene screenshot                      | Transparent PNG / procedural effect | `/assets/fx/weather/`                      | Weather                 |
+| FX-04  | 09. FX / ANIMATION REFERENCE        | Environment animation      | Individual visual element jika diperlukan                              | Diagram labels                             | Reference / PNG                     | `/assets/fx/environment/`                  | Animation reference     |
+| FX-05  | 09. FX / ANIMATION REFERENCE        | Character animation        | Tidak crop sebagai final sprite jika hanya pose reference              | Board                                      | Reference                           | `/docs/reference/fx/`                      | Animation timing        |
+| FX-06  | 09. FX / ANIMATION REFERENCE        | UI animation               | Tidak crop screenshot                                                  | Board labels                               | Reference                           | `/docs/reference/fx/`                      | CSS animation           |
+| FX-07  | 09. FX / ANIMATION REFERENCE        | Transition effects         | Tidak crop screenshot                                                  | Board                                      | CSS/Three.js implementation         | `/src/fx/transitions/`                     | Transition              |
+| FX-08  | 09. FX / ANIMATION REFERENCE        | Particle elements          | Dust / petal / leaf / sparkle / firefly / heart                        | Board background                           | Individual transparent PNG          | `/assets/fx/particles/`                    | Particle system         |
+| CG-01  | 10. STORY CG / SPECIAL ILLUSTRATION | Daily life moments         | Individual CG artwork yang ditentukan story                            | Heading / labels / notes                   | PNG                                 | `/assets/cg/story/`                        | Story CG                |
+| CG-02  | 10. STORY CG / SPECIAL ILLUSTRATION | Character interaction      | Individual interaction CG                                              | Board                                      | PNG                                 | `/assets/cg/story/`                        | Relationship moment     |
+| CG-03  | 10. STORY CG / SPECIAL ILLUSTRATION | Location scenes            | Individual location CG                                                 | Board                                      | PNG                                 | `/assets/cg/story/`                        | Special scene           |
+| CG-04  | 10. STORY CG / SPECIAL ILLUSTRATION | Emotional scenes           | Individual emotional CG                                                | Board                                      | PNG                                 | `/assets/cg/story/`                        | Emotional event         |
+| CG-05  | 10. STORY CG / SPECIAL ILLUSTRATION | Story progression          | Beginning / development / climax artwork jika diperlukan               | Story labels                               | PNG                                 | `/assets/cg/story/`                        | Story progression       |
+| CG-06  | 10. STORY CG / SPECIAL ILLUSTRATION | Special scenes             | Festival / event / ending                                              | Board                                      | PNG                                 | `/assets/cg/special/`                      | Special event           |
+| CG-07  | 10. STORY CG / SPECIAL ILLUSTRATION | Weather / time variation   | Hanya variant yang dipakai story                                       | Board                                      | PNG                                 | `/assets/cg/story/variants/`               | Time/weather            |
+| CG-08  | 10. STORY CG / SPECIAL ILLUSTRATION | Composition reference      | Tidak crop untuk gameplay                                              | Storyboard diagrams                        | Reference only                      | `/docs/reference/cg/`                      | Shot composition        |
+| IMP-01 | 11. IMPLEMENTATION                  | Project structure          | Tidak ada image extraction                                             | Entire board                               | Reference only                      | `/docs/reference/implementation/`          | Architecture            |
+| IMP-02 | 11. IMPLEMENTATION                  | Screen flow                | Tidak crop screenshot                                                  | Entire board                               | Reference only                      | `/docs/reference/implementation/`          | UX flow                 |
+| IMP-03 | 11. IMPLEMENTATION                  | Asset integration examples | Tidak crop screenshot                                                  | Entire screenshot                          | Reference only                      | `/docs/reference/implementation/`          | Implementation          |
+| IMP-04 | 11. IMPLEMENTATION                  | Output target              | Tidak crop                                                             | Screenshot                                 | Reference only                      | `/docs/reference/implementation/`          | Definition of done      |
+
+---
+
+# 5A.2 EXTRACTION PRIORITY
+
+Jangan melakukan seluruh extraction sekaligus.
+
+Gunakan urutan:
+
+## PRIORITY 1 — WAJIB UNTUK MVP
+
+```text
+CPA-01
+CPA-02
+CPA-03
+CPA-05
+CPA-06
+
+ENV-01
+ENV-02
+ENV-03
+
+LYR-01
+LYR-02
+LYR-03
+
+DIA-01
+DIA-03
+DIA-04
+DIA-05
+DIA-06
+
+UI-01
+UI-02
+UI-03
+UI-04
+UI-05
+
+FX-08
+
+CG-01
+```
+
+Ini adalah asset minimum untuk membuat vertical slice playable.
+
+---
+
+# 5A.3 PRIORITY 2 — POLISH
+
+Setelah vertical slice berjalan:
+
+```text
+CPA-04
+CPA-07
+
+ENV-04
+LYR-04
+
+DIA-07
+DIA-08
+
+UI-06
+UI-07
+UI-09
+UI-10
+UI-11
+
+FX-02
+FX-03
+FX-04
+FX-06
+FX-07
+
+CG-02
+CG-03
+CG-04
+```
+
+---
+
+# 5A.4 PRIORITY 3 — FUTURE / OPTIONAL
+
+Jangan menghabiskan waktu MVP untuk asset berikut jika belum diperlukan oleh story:
+
+```text
+DIA-01 variants
+DIA-10
+UI-12
+FX-05
+CG-05
+CG-06
+CG-07
+```
+
+---
+
+# 5A.5 RULE UNTUK CROP
+
+Untuk setiap baris yang bertanda:
+
+```text
+Individual PNG
+Transparent PNG
+SVG/PNG
+```
+
+agent harus menghasilkan **asset individual**, bukan board.
+
+Contoh:
+
+```text
+SOURCE:
+04. CHARACTER PRODUCTION ASSETS
+
+WRONG:
+tania_character_board.png
+
+CORRECT:
+tania_standing_neutral.png
+tania_standing_smile.png
+tania_standing_talking.png
+tania_sitting_writing.png
+tania_portrait_neutral.png
+tania_portrait_smile.png
+```
+
+---
+
+# 5A.6 RULE UNTUK ENVIRONMENT
+
+Environment berbeda dari character.
+
+Jika source sudah berupa clean environment:
+
+```text
+JANGAN memotongnya menjadi potongan kecil secara berlebihan.
+```
+
+Prioritas:
+
+```text
+clean environment
+        ↓
+layer separation jika memang diperlukan
+        ↓
+background
+far
+mid
+main
+foreground
+```
+
+Jangan memecah furniture satu per satu apabila layer tersebut memang sudah cocok sebagai satu layer.
+
+Tujuannya adalah **2.5D yang efisien**, bukan membuat ratusan texture kecil.
+
+---
+
+# 5A.7 RULE UNTUK UI
+
+UI reference board harus diterjemahkan menjadi component.
+
+Contoh:
+
+```text
+REFERENCE:
+Dialogue Box
+
+IMPLEMENTATION:
+DialogueBox.tsx / DialogueBox.js
+SpeakerTag
+Portrait
+DialogueText
+ContinueIndicator
+```
+
+Bukan:
+
+```text
+dialogue_board.png
+```
+
+yang ditempel sebagai UI.
+
+---
+
+# 5A.8 RULE UNTUK DIARY
+
+Diary harus modular.
+
+Minimal:
+
+```text
+DiaryBook
+├── BookFrame
+├── Page
+├── PageTexture
+├── Decoration
+├── Photo
+├── Date
+├── EntryText
+├── Navigation
+└── PageTransition
+```
+
+Dengan begitu user dapat benar-benar menulis diary.
+
+---
+
+# 5A.9 RULE UNTUK CG
+
+CG adalah pengecualian.
+
+Jika artwork CG memang sudah berupa satu ilustrasi final:
+
+```text
+1 CG = 1 image
+```
+
+Jangan dipecah menjadi:
+
+```text
+character
+background
+foreground
+```
+
+kecuali memang ada kebutuhan khusus.
+
+CG harus dipertahankan sebagai satu composition.
+
+---
+
+# 5A.10 EXTRACTION ACCEPTANCE CRITERIA
+
+Setiap asset hasil extraction harus memenuhi:
+
+```text
+[ ] berasal dari source reference yang benar
+[ ] panel source sesuai manifest
+[ ] elemen yang diambil sesuai tabel
+[ ] tidak ada elemen board yang ikut masuk
+[ ] tidak ada text label yang ikut masuk
+[ ] tidak ada checklist yang ikut masuk
+[ ] tidak ada border board yang tidak diperlukan
+[ ] tidak ada crop pada bagian penting
+[ ] aspect ratio benar
+[ ] transparency benar jika diperlukan
+[ ] visual tidak berubah
+[ ] warna tidak berubah
+[ ] tidak diregenerate
+[ ] filename mengikuti convention
+[ ] ditempatkan di folder yang benar
+```
+
+---
+
+# 5A.11 ASSET TRACEABILITY
+
+Setiap production asset harus dapat ditelusuri kembali ke source.
+
+Contoh:
+
+```text
+tania_standing_neutral.png
+
+SOURCE:
+04. CHARACTER PRODUCTION ASSETS
+
+PANEL:
+Standing Poses
+
+USAGE:
+Bedroom / Garden / Cafe
+
+SYSTEM:
+Three.js Character Layer
+```
+
+Contoh:
+
+```text
+diary_page_lined.png
+
+SOURCE:
+07. DIARY SYSTEM ASSETS
+
+PANEL:
+Page Variations
+
+USAGE:
+Diary default page
+
+SYSTEM:
+Diary UI
+```
+
+Contoh:
+
+```text
+fx_dust_01.png
+
+SOURCE:
+09. FX / ANIMATION REFERENCE
+
+PANEL:
+Particle Elements
+
+USAGE:
+Bedroom / Garden atmosphere
+
+SYSTEM:
+Three.js Particle Layer
+```
+
+---
+
+# 5A.12 AGENT EXECUTION RULE
+
+Saat membaca tabel ini, agent harus memperlakukannya sebagai **production checklist**, bukan rekomendasi.
+
+Untuk setiap baris:
+
+```text
+SOURCE
+→ LOCATE
+→ CROP / EXTRACT
+→ VALIDATE
+→ RENAME
+→ MOVE
+→ REGISTER
+→ USE
+```
+
+Jika asset source tidak ditemukan:
+
+1. jangan membuat asset pengganti,
+2. jangan menggunakan asset dari panel lain,
+3. jangan mengambil asset dari screenshot yang berbeda,
+4. catat asset sebagai `MISSING`,
+5. lanjutkan asset lain yang tidak bergantung padanya,
+6. laporkan daftar `MISSING ASSETS` pada akhir pekerjaan.
+
+---
+
+# 5A.13 MISSING ASSET REPORT
+
+Jika ada asset yang tidak tersedia, gunakan format:
+
+```text
+MISSING ASSETS
+
+1. Asset:
+   tania_sitting_writing.png
+
+   Expected source:
+   04. CHARACTER PRODUCTION ASSETS
+
+   Expected panel:
+   Sitting Poses
+
+   Required by:
+   Bedroom / Diary Scene
+
+   Status:
+   MISSING
+
+   Action:
+   DO NOT SUBSTITUTE
+```
+
+Jangan diam-diam mengganti asset dengan hasil generative baru.
+
+---
+
+# 5A.14 FINAL EXTRACTION PRINCIPLE
+
+Agent tidak perlu bertanya:
+
+> "Bagian mana yang harus saya crop?"
+
+Jawabannya sudah ditentukan oleh manifest ini.
+
+Agent hanya perlu:
+
+```text
+FIND SOURCE
+     ↓
+FIND PANEL
+     ↓
+TAKE SPECIFIED ELEMENT
+     ↓
+EXPORT
+     ↓
+VALIDATE
+     ↓
+IMPLEMENT
+```
+
+**Tidak ada creative reinterpretation pada tahap asset extraction.**
+
+Creative decision hanya boleh dilakukan pada implementation behavior, layout responsiveness, animation timing, dan code architecture selama tidak mengubah visual source of truth.
